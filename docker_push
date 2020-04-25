@@ -8,9 +8,13 @@ set -e
 # and https://docs.travis-ci.com/user/docker/#private-registry-login
 echo "$HEROKU_AUTH_TOKEN" | docker login -u _ --password-stdin registry.heroku.com
 
+echo "hhhhhhh"
+echo "$DOCKER_IMAGE"
+echo "kkkkkkk"
 docker push $DOCKER_IMAGE
+echo "zaaaa"
 
-docker logout
+# docker logout
 
 # cf. https://devcenter.heroku.com/articles/container-registry-and-runtime#api
 # and https://toedter.com/2018/06/02/heroku-docker-deployment-update/
