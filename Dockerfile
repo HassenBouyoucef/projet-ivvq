@@ -1,6 +1,6 @@
 ############################################
 # base build image
-FROM node:lts-alpine as node
+FROM node:lts-alpine as build-stage
 
 # Create app directory
 WORKDIR /app
@@ -18,3 +18,10 @@ COPY frontend/. .
 RUN npm run build
 
 EXPOSE 8080
+#############################################
+FROM nginx:1.14.1-alpine as production-stage
+
+COPY --from=build-stage app/target/dist /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
