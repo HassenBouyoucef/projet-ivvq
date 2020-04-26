@@ -8,8 +8,6 @@ set -e
 # and https://docs.travis-ci.com/user/docker/#private-registry-login
 echo "$HEROKU_AUTH_TOKEN" | docker login -u _ --password-stdin registry.heroku.com
 
-docker build -t $DOCKER_IMAGE .
-
 docker push $DOCKER_IMAGE
 
 docker logout
