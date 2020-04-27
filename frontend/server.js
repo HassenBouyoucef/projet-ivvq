@@ -1,10 +1,12 @@
-var express = require('express');
-var app = express();
-var port = process.env.PORT || 80;
+const express = require('express');
+const port = process.env.PORT || 8080;
+const app = express();
 
-// Serve static files
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + "/dist/"));
+app.get(/.*/, function (req, res){
+    res.sendfile(__dirname + "/dist/index.html") ;
+});
 
-// Serve your app
-console.log('Served: http://localhost:' + port);
 app.listen(port);
+
+console.log("Server started...");
