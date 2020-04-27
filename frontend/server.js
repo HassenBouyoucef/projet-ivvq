@@ -1,11 +1,10 @@
 var express = require('express');
-var serveStatic = require('serve-static');
-var path = require('path');
-
 var app = express();
+var port = process.env.PORT || 80;
 
-app.use('/', serveStatic(path.join(__dirname,'/dist')));
+// Serve static files
+app.use(express.static(__dirname + '/public'));
 
-var port = process.env.PORT || 8080;
+// Serve your app
+console.log('Served: http://localhost:' + port);
 app.listen(port);
-console.log('Listening on port: ' + port);
