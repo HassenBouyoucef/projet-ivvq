@@ -8,12 +8,12 @@ services:
    POSTGRES_DB: 'yaqari_db'
    POSTGRES_HOST_AUTH_METHOD: 'trust' # allow no password
  app:
-  container_name: registry.heroku.com/projet-ivvq/web
+  #container_name: registry.heroku.com/projet-ivvq/web
   image: registry.heroku.com/projet-ivvq/web
   build:
    context: ./
    dockerfile: Dockerfile
   ports:
-  - "8080:8080"
+  - "8080:80"
   depends_on:
     - dbpostgresql
