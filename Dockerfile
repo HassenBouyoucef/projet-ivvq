@@ -50,10 +50,6 @@ COPY --from=maven /app/app.jar ./app.jar
 
 COPY --from=node /app/dist ./app/src/main/resources
 
-RUN echo $(ls -1 ./app/src/main/resources)
+EXPOSE 8080
 
-#CMD ["ls", "./app/src/main/resources"]
-#EXPOSE 8080
-# set the startup command to run your library
-# See https://discuss.pivotal.io/hc/en-us/articles/230141007
-#ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/.urandom", "-jar", "./app.jar"]
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/.urandom", "-jar", "./app.jar"]
