@@ -1,22 +1,33 @@
+
 ############################################
 # base build image
-FROM node:lts-alpine as node
+FROM maven:3-jdk-8 as maven
 
-# Create app directory
 WORKDIR /app
 
-# Copy both 'package.json' and 'package-lock.json' (if available)
-COPY frontend/package*.json ./
+# Copy the project object model file
+COPY backend/pom.xml ./pom.xml
 
-# Install project dependencies
-RUN npm install
+# fetch all dependencies
+RUN mvn dependency:go-offline -B
 
-# Bundle app source
-COPY frontend/. .
+# copy your other files
+COPY backend/src ./src
 
-# Build app for production with minification
-RUN npm run build
+# build for release
+RUN mvn package && cp target/yaqari-*.jar app.jar
 
-EXPOSE 4200
+############################################
+#smaller, final base image
+FROM openjdk:8-jre-alpine
 
-CMD [ "node", "server.js" ]
+# set deployment directory
+WORKDIR /app
+
+# copy over the built artifact from maven image
+COPY --from=maven /app/app.jar ./app.jar
+
+EXPOSE 8080
+# set the startup command to run your library
+# See https://discuss.pivotal.io/hc/en-us/articles/230141007
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/.urandom", "-jar", "./app.jar"]
