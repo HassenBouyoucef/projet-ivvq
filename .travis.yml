@@ -21,6 +21,4 @@ before_install:
 deploy:
   provider: script
   script: bash docker_push
-  on:
-branch: heroku
-app: projet-ivvq
+  
