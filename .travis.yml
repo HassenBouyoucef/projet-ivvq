@@ -22,4 +22,5 @@ deploy:
   provider: script
   script: bash docker_push
   on:
-branch: heroku
+tags: true
+      all_branches: true
