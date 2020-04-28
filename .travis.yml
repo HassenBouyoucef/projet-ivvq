@@ -19,6 +19,6 @@ before_install:
 
 # cf. https://docs.travis-ci.com/user/docker/#branch-based-registry-pushes
 deploy:
-  provider: script
+  provider: heroku
   script: bash docker_push
   on: heroku
